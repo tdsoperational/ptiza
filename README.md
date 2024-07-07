@@ -3,6 +3,8 @@ The code itself isn't designed to evade in any way, simply sends logged keystrok
 It's easily killable, just taskkill it.
 
 The author (Me, tdsoperational, known as tdsmental) is not responsible for any missuse.
-As mentioned earlier, its designed to test antivirus products.
+As mentioned earlier, it is designed to test antivirus products, not missuse.
+
+By missuse i mean using this code maliciously, or similiar.
 
 Sincerely, tdsoperational.
