@@ -12,7 +12,7 @@ Sincerely, tdsoperational.
 
 **Functionality**
 - Logs keystrokes without being too noisy
-- Doesn't required admin perms
+- Doesn't require admin perms
 - Sends logged keystrokes to a domain assuming it has a route that accepts post requests
 - Data sent is not encryped, working on making it encrypt data before being sent.
 - 7.5 KB in size if packed with UPX.
