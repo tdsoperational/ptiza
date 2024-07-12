@@ -25,3 +25,4 @@ Sincerely, tdsoperational.
 - A server so you don't need a goddamn domain
 - Persistance
 - Polymorphism upon execution
+- Randomized intervals of sending data, the upcoming server will be able to know when logged keystrokes will be received.
