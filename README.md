@@ -19,10 +19,11 @@ Sincerely, tdsoperational.
 - 11 KB in size if not packed at all
 
 **Upcoming features**
-- Obfuscation
-- Anti static analysis
-- Anti Behavioral analysis
-- A server so you don't need a goddamn domain
-- Persistance
-- Polymorphism upon execution
+- Obfuscation.
+- Anti static analysis.
+- Anti Behavioral analysis.
+- A server so you don't need a goddamn domain.
+- Persistance.
+- Polymorphism upon execution.
 - Randomized intervals of sending data, the upcoming server will be able to know when logged keystrokes will be received.
+- Encrypting data before sending it.
