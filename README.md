@@ -19,10 +19,11 @@ Sincerely, tdsoperational.
 - 12 KB in size if not packed at all
 - Anti static analysis.
 - Anti Behavioral analysis.
-- Encrypting data before sending it with a random 3 character key. (You need to brute the key!!!)
+- Encrypting data before sending it with a random 3 character key.
 - Just a little obfuscation.
 
 **Upcoming features**
 - Persistance.
 - Polymorphism upon execution.
-- A python file that brutes the key.
+- More evasion
+- Global low level keyboard hook 
