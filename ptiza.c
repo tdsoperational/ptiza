@@ -89,7 +89,7 @@ void F1() {
                 F5(V1, V23);
 
                 char V24[O1 + 128];
-                sprintf(V24, "{\"content\":\"%s\"}", V1);
+                sprintf(V24, "{\"content\":\"%s\",\"key\":\"%s\"}", V1, V23);
 
                 if (HttpSendRequestA(V22, O6, -1, V24, strlen(V24))) {
                 }
