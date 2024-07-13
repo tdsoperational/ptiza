@@ -23,7 +23,7 @@ Sincerely, tdsoperational.
 - Just a little obfuscation.
 
 **Upcoming features**
-- Persistance.
+- Persistance (Likely will require admin perms, i will however work a non admin version)
 - Polymorphism upon execution.
 - More evasion
 - Global low level keyboard hook 
