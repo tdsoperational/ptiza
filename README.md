@@ -1,4 +1,4 @@
-# Ptiza
+# ptiza
 
 A keylogger written in C, its purpose being to test antiviruses to see if they intercept the logged keystrokes. Designed for a Windows system, with no use of external libraries. The code itself isn't designed to evade in any way (for now).
 
