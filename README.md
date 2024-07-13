@@ -15,13 +15,14 @@ Sincerely, tdsoperational.
 - Doesn't require admin perms
 - Sends logged keystrokes to a domain assuming it has a route that accepts post requests
 - Data sent is not encryped, working on making it encrypt data before being sent.
-- 7.5 KB in size if packed with UPX.
-- 11 KB in size if not packed at all
-
-**Upcoming features**
-- Obfuscation.
+- 8 KB in size if packed with UPX.
+- 12 KB in size if not packed at all
 - Anti static analysis.
 - Anti Behavioral analysis.
+- Encrypting data before sending it with a random 3 character key. (You need to brute the key!!!)
+- Just a little obfuscation.
+
+**Upcoming features**
 - Persistance.
 - Polymorphism upon execution.
-- Encrypting data before sending it.
+- A python file that brutes the key.
