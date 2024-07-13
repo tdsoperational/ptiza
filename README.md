@@ -19,7 +19,7 @@ Sincerely, tdsoperational.
 - 12 KB in size if not packed at all
 - Anti static analysis.
 - Anti Behavioral analysis.
-- Encrypting data before sending it with a random 3 character key.
+- Encrypting data before sending it with a random 3 character decryption key.
 - Just a little obfuscation.
 
 **Upcoming features**
