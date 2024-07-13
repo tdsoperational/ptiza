@@ -30,11 +30,15 @@ Sincerely, tdsoperational.
 
 **Documentation**
 I've decided to test the keylogger i've made, static and dynamic.
+
 Speaking of static analysis, here are the VirusTotal link:
 https://www.virustotal.com/gui/file/a4e82c076ee66cf63054fe3f3c0d98acca341958dbf679fd3c3dd88f647cfa40?nocache=1
 
 Speaking of Behavioral analysis, i've ran the executable on my host machine. 
+
 Kaspersky, my current AV with maxed out settings didn't give a shit apperantly.
+
 But that is very likely a matter of time until they realize it is a keylogger.
+
 
 That's it for now, hopefully something you all enjoyed!
