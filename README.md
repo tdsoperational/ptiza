@@ -29,7 +29,6 @@ Sincerely, tdsoperational.
 - Polymorphism upon execution
 - More evasion techniques
 - Global low-level keyboard hook 
-- HTTPS instead of HTTP
 - Fallback C2
 
 ## Documentation
