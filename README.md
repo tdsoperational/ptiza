@@ -33,7 +33,7 @@ Sincerely, tdsoperational.
 I've decided to test the keylogger I've made, both statically and dynamically.
 
 
-Here is the VirusTotal report if you give a shit: [VirusTotal report](https://www.virustotal.com/gui/file/9636ba120b3e010da991c7c757012f29f760ab17dbcb9efaecbc32289f687adf?nocache=1)
+Here is the VirusTotal report if you give a shit: [VirusTotal report](https://www.virustotal.com/gui/file/0d9ba751a47e198d4a270f29d031cb529ce3b8ea6e59957089d3c96e0e943275?nocache=1)
 
 
 I've run the executable on my host machine. Kaspersky, my current AV with maxed-out settings, didn't give a shit apparently. But that's very likely a matter of time until they realize it is a keylogger.
