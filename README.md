@@ -22,14 +22,13 @@ Sincerely, tdsoperational.
 - Anti-behavioral analysis
 - Encrypts data before sending it with a random 3-character decryption key
 - Just a little obfuscation
+- Fallback C2
+- Persistance (Reg key)
 
 ## Upcoming Features
 
-- Persistence (Likely will require admin permissions, but I'll work on a non-admin version)
-- Polymorphism upon execution
 - More evasion techniques
-- Global low-level keyboard hook 
-- Fallback C2
+- Obfuscation
 
 ## Documentation
 
