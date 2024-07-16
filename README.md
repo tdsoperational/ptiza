@@ -12,12 +12,10 @@ Sincerely, tdsoperational.
 
 ## Functionality
 
-- Logs keystrokes without being too noisy
-- Doesn't require admin permissions
 - Sends logged keystrokes to a domain assuming it has a route that accepts POST requests
 - Data sent is encrypted, mostly to avoid AVs terminating the process
-- 8 KB in size if packed with UPX
-- 12 KB in size if not packed at all
+- 9 KB in size if packed with UPX
+- 14 KB in size if not packed at all
 - Anti-static analysis
 - Anti-behavioral analysis
 - Encrypts data before sending it with a random 3-character decryption key
