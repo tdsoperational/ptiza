@@ -26,7 +26,7 @@ Sincerely, tdsoperational.
 ## Upcoming Features
 
 - More evasion techniques
-- Obfuscation
+- More obfuscation
 
 ## Documentation
 
